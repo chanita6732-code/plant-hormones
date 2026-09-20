@@ -277,7 +277,7 @@ h1{
 /* ── plant popup (tap a marker) ───────────────────────── */
 .plant-popup-scrim{position:fixed;inset:0;z-index:39;background:transparent}
 .plant-popup{
-  position:absolute;z-index:40;width:min(320px,92vw);
+  position:fixed;top:0;left:0;z-index:40;width:min(320px,92vw);
   max-height:min(70vh,480px);overflow-y:auto;overscroll-behavior:contain;
   background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
   box-shadow:var(--shadow-hover);padding:20px 44px 18px 20px;
@@ -285,7 +285,7 @@ h1{
   transition:opacity .18s var(--ease);
   scrollbar-width:thin;scrollbar-color:var(--line) transparent;
 }
-.plant-popup.is-open{opacity:1;pointer-events:auto}
+.plant-popup.is-open{opacity:1;pointer-events:auto;will-change:transform}
 .plant-popup::-webkit-scrollbar{width:6px}
 .plant-popup::-webkit-scrollbar-track{background:transparent}
 .plant-popup::-webkit-scrollbar-thumb{background:var(--line);border-radius:999px}
@@ -1128,7 +1128,7 @@ function renderPopupBody(part){
   });
 }
 
-function positionPopup(markerEl){
+function computeTargetPopupPos(markerEl){
   const rect = markerEl.getBoundingClientRect();
   const popRect = plantPopup.getBoundingClientRect();
   const margin = 14, headerGap = 76;
@@ -1143,21 +1143,39 @@ function positionPopup(markerEl){
   top = Math.max(headerGap, Math.min(top, window.innerHeight - popRect.height - margin));
   let left = rect.left + rect.width/2 - popRect.width/2;
   left = Math.max(margin, Math.min(left, window.innerWidth - popRect.width - margin));
-  plantPopup.style.top = (top + window.scrollY) + 'px';
-  plantPopup.style.left = (left + window.scrollX) + 'px';
-  plantPopup.dataset.arrow = arrow;
   const arrowLeft = Math.max(16, Math.min(rect.left + rect.width/2 - left, popRect.width - 16));
-  plantPopup.style.setProperty('--arrow-left', arrowLeft + 'px');
+  return {top, left, arrow, arrowLeft};
 }
 
 let activePartId = null;
+let popupMarkerEl = null;
+let popupRAF = null;
+const popupCurrent = {top:0, left:0, inited:false};
+
+function popupTick(){
+  if(!popupMarkerEl){ popupRAF = null; return; }
+  const target = computeTargetPopupPos(popupMarkerEl);
+  if(!popupCurrent.inited){
+    popupCurrent.top = target.top; popupCurrent.left = target.left; popupCurrent.inited = true;
+  }else{
+    const ease = reduce ? 1 : 0.16;
+    popupCurrent.top += (target.top - popupCurrent.top) * ease;
+    popupCurrent.left += (target.left - popupCurrent.left) * ease;
+  }
+  plantPopup.style.transform = `translate3d(${popupCurrent.left}px, ${popupCurrent.top}px, 0)`;
+  plantPopup.dataset.arrow = target.arrow;
+  plantPopup.style.setProperty('--arrow-left', target.arrowLeft + 'px');
+  popupRAF = requestAnimationFrame(popupTick);
+}
+
 function openPopup(part, markerEl){
   renderPopupBody(part);
+  popupMarkerEl = markerEl;
+  popupCurrent.inited = false;
   plantPopup.classList.add('is-open');
   plantPopup.setAttribute('aria-hidden', 'false');
   plantPopupScrim.hidden = false;
-  positionPopup(markerEl);
-  requestAnimationFrame(()=> positionPopup(markerEl));
+  if(!popupRAF) popupRAF = requestAnimationFrame(popupTick);
 }
 function closePopup(){
   plantPopup.classList.remove('is-open');
@@ -1167,6 +1185,8 @@ function closePopup(){
     m.classList.remove('is-active'); m.setAttribute('aria-pressed', 'false');
   });
   activePartId = null;
+  popupMarkerEl = null;
+  if(popupRAF){ cancelAnimationFrame(popupRAF); popupRAF = null; }
 }
 function selectPart(id, markerEl){
   if(id === activePartId){ closePopup(); return; }
@@ -1186,10 +1206,6 @@ plantMarkers.addEventListener('click', e=>{
 plantPopupClose.addEventListener('click', closePopup);
 plantPopupScrim.addEventListener('click', closePopup);
 document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closePopup(); });
-window.addEventListener('resize', ()=>{
-  const activeMarker = plantMarkers.querySelector('.p-marker.is-active');
-  if(activeMarker) positionPopup(activeMarker);
-});
 
 /* ── comparison table (view: #/compare) ───────────────── */
 const compareTable = document.getElementById('compareTable');
