@@ -194,6 +194,9 @@ h1{
 .plant-svg .root{stroke:var(--muted);stroke-width:3;stroke-linecap:round;fill:none}
 .plant-svg .root-tip{fill:var(--surface);stroke:var(--muted);stroke-width:2.5}
 .plant-svg .leaf{fill:var(--accent);opacity:.85}
+.plant-svg .fruit-stem{stroke:var(--trunk);stroke-width:2;stroke-linecap:round;fill:none}
+.plant-svg .fruit{fill:var(--fruit)}
+.plant-svg .fruit-shine{fill:#fff;opacity:.4}
 
 .p-markers{position:absolute;inset:0}
 .p-marker{
@@ -591,6 +594,9 @@ try{
               <ellipse class="leaf" cx="0" cy="0" rx="15" ry="8" transform="translate(138,58) rotate(-18)"/>
               <ellipse class="leaf" cx="0" cy="0" rx="15" ry="8" transform="translate(163,58) rotate(18)"/>
               <ellipse class="leaf" cx="0" cy="0" rx="13" ry="7" transform="translate(150,42) rotate(0)"/>
+              <path class="fruit-stem" d="M220,138 Q236,140 244,147"/>
+              <circle class="fruit" cx="247" cy="151" r="8"/>
+              <circle class="fruit-shine" cx="244" cy="147" r="2.2"/>
             </svg>
             <div class="p-markers" id="plantMarkers"></div>
           </div>
