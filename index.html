@@ -1,0 +1,512 @@
+<title>ฮอร์โมนพืช · Plant Hormones</title>
+<meta name="description" content="เว็บนำเสนอฮอร์โมนพืช 5 ชนิด: ออกซิน จิบเบอเรลลิน ไซโทไคนิน กรดแอบไซซิก และเอทิลีน">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfcfa;
+  --surface:#ffffff;
+  --surface-2:#f4f7f2;
+  --line:#e4eade;
+  --text:#1e2a22;
+  --muted:#657365;
+  --accent:#4a7a53;
+  --accent-soft:#e8f0e6;
+  --shadow:0 1px 2px rgba(30,42,34,.04), 0 8px 24px rgba(30,42,34,.05);
+  --shadow-hover:0 2px 4px rgba(30,42,34,.05), 0 18px 40px rgba(30,42,34,.09);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --radius:18px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#11150f;
+    --surface:#171c15;
+    --surface-2:#1d231a;
+    --line:#2a3327;
+    --text:#e6ece2;
+    --muted:#9aa896;
+    --accent:#8fbf94;
+    --accent-soft:#1f2a1e;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.28);
+    --shadow-hover:0 2px 4px rgba(0,0,0,.35), 0 18px 40px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11150f;
+  --surface:#171c15;
+  --surface-2:#1d231a;
+  --line:#2a3327;
+  --text:#e6ece2;
+  --muted:#9aa896;
+  --accent:#8fbf94;
+  --accent-soft:#1f2a1e;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.28);
+  --shadow-hover:0 2px 4px rgba(0,0,0,.35), 0 18px 40px rgba(0,0,0,.4);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"IBM Plex Sans Thai","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-weight:400;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  transition:background-color .4s var(--ease), color .4s var(--ease);
+}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* ── views ─────────────────────────────────────────── */
+.stage{position:relative;min-height:100vh}
+.view{
+  opacity:0;
+  transform:translateY(14px);
+  transition:opacity .42s var(--ease), transform .42s var(--ease);
+  pointer-events:none;
+  position:absolute;
+  inset:0 0 auto 0;
+}
+.view.is-active{
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
+  position:relative;
+}
+.view.is-leaving{opacity:0;transform:translateY(-10px)}
+
+/* ── home ──────────────────────────────────────────── */
+.hero{padding:clamp(72px,14vh,140px) 0 clamp(40px,7vh,64px)}
+.eyebrow{
+  font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--accent);font-weight:500;margin:0 0 18px;
+}
+h1{
+  font-size:clamp(2.1rem,5.4vw,3.4rem);
+  line-height:1.25;font-weight:600;margin:0 0 20px;letter-spacing:-.01em;
+}
+.lede{
+  font-size:clamp(1rem,2.2vw,1.12rem);
+  color:var(--muted);max-width:52ch;margin:0;font-weight:300;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:20px;
+  padding-bottom:clamp(64px,12vh,120px);
+}
+.card{
+  appearance:none;
+  text-align:start;
+  font:inherit;color:inherit;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:30px 28px 28px;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:14px;
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease),
+             border-color .35s var(--ease), background-color .35s var(--ease);
+  opacity:0;
+  animation:rise .6s var(--ease) forwards;
+}
+@keyframes rise{to{opacity:1;translate:none}}
+.card{translate:0 16px}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-hover);
+  border-color:color-mix(in srgb, var(--accent) 38%, var(--line));
+}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.card:active{transform:translateY(-1px)}
+.icon{
+  width:46px;height:46px;border-radius:13px;
+  background:var(--accent-soft);
+  color:var(--accent);
+  display:grid;place-items:center;
+  transition:background-color .35s var(--ease), transform .45s var(--ease);
+}
+.card:hover .icon{transform:scale(1.06) rotate(-3deg)}
+.icon svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.card h2{font-size:1.22rem;font-weight:600;margin:0;line-height:1.4}
+.card .en{
+  display:block;font-family:"Inter",sans-serif;font-size:.8rem;font-weight:400;
+  letter-spacing:.06em;color:var(--muted);margin-top:3px;
+}
+.card p{margin:0;color:var(--muted);font-size:.94rem;font-weight:300;line-height:1.7}
+.card .go{
+  margin-top:16px;padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:.86rem;color:var(--text);font-weight:500;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  transition:border-color .35s var(--ease);
+}
+.card:hover .go{border-color:color-mix(in srgb, var(--accent) 30%, var(--line))}
+.go-badge{
+  width:34px;height:34px;flex:none;border-radius:50%;
+  background:var(--accent-soft);color:var(--accent);
+  display:grid;place-items:center;
+  transition:background-color .4s var(--ease), color .4s var(--ease),
+             transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+.go-badge svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
+.card:hover .go-badge{
+  background:var(--accent);color:#fff;
+  transform:translateX(3px) scale(1.08);
+}
+.card:active .go-badge{transform:translateX(3px) scale(.96)}
+
+/* ── detail ────────────────────────────────────────── */
+.detail-inner{padding:clamp(32px,6vh,56px) 0 clamp(72px,12vh,120px);max-width:760px}
+.back{
+  appearance:none;background:none;border:0;font:inherit;cursor:pointer;
+  color:var(--muted);font-size:.92rem;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 14px 9px 10px;margin:0 0 clamp(28px,5vh,48px) -10px;
+  border-radius:999px;
+  transition:color .3s var(--ease), background-color .3s var(--ease), gap .3s var(--ease);
+}
+.back:hover{color:var(--text);background:var(--surface-2);gap:12px}
+.back:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.back svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+.detail-head{display:flex;align-items:center;gap:18px;margin-bottom:12px}
+.detail-head .icon{width:58px;height:58px;border-radius:16px;flex:none}
+.detail-head .icon svg{width:30px;height:30px}
+.detail-title{font-size:clamp(1.8rem,4.6vw,2.6rem);font-weight:600;margin:0;line-height:1.3;letter-spacing:-.01em}
+.detail-en{
+  font-family:"Inter",sans-serif;color:var(--muted);
+  font-size:.92rem;letter-spacing:.06em;margin:2px 0 0;font-weight:400;
+}
+.detail-lede{
+  color:var(--muted);font-weight:300;font-size:1.04rem;
+  margin:0 0 clamp(36px,6vh,56px);max-width:56ch;
+}
+.rule{height:1px;background:var(--line);border:0;margin:0 0 clamp(32px,5vh,44px)}
+
+section.block{margin-bottom:clamp(38px,6vh,56px)}
+section.block:last-of-type{margin-bottom:0}
+.block-label{
+  font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);font-weight:500;margin:0 0 6px;
+}
+.block h3{font-size:1.18rem;font-weight:600;margin:0 0 16px;line-height:1.45}
+ul.points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+ul.points li{
+  position:relative;padding-left:22px;color:var(--text);
+  font-weight:300;font-size:1rem;line-height:1.75;
+}
+ul.points li::before{
+  content:"";position:absolute;left:2px;top:.72em;
+  width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.55;
+}
+ul.points li b{font-weight:500;color:var(--text)}
+.note{
+  background:var(--surface-2);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px 20px;
+  color:var(--muted);
+  font-size:.94rem;font-weight:300;line-height:1.7;
+}
+.note b{color:var(--text);font-weight:500}
+
+.nextnav{
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  margin-top:clamp(48px,8vh,72px);padding-top:28px;border-top:1px solid var(--line);
+}
+.nextnav button{
+  appearance:none;background:none;border:0;font:inherit;cursor:pointer;
+  color:var(--muted);font-size:.92rem;padding:8px 12px;border-radius:10px;
+  transition:color .3s var(--ease), background-color .3s var(--ease);
+}
+.nextnav button:hover{color:var(--accent);background:var(--surface-2)}
+.nextnav button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+footer{
+  border-top:1px solid var(--line);
+  padding:28px 0 40px;color:var(--muted);
+  font-size:.84rem;font-weight:300;
+}
+
+@media (max-width:560px){
+  .wrap{padding:0 20px}
+  .grid{grid-template-columns:1fr;gap:16px}
+  .card{padding:24px 22px}
+  .detail-head{gap:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .card{opacity:1;translate:none}
+  .card:hover{transform:none}
+}
+</style>
+
+<main class="stage">
+  <!-- HOME -->
+  <div class="view is-active" id="view-home">
+    <div class="wrap">
+      <header class="hero">
+        <p class="eyebrow">Plant Physiology</p>
+        <h1>ฮอร์โมนพืช</h1>
+        <p class="lede">สารเคมีปริมาณเล็กน้อยที่พืชสร้างขึ้นเอง แล้วลำเลียงไปควบคุมการเจริญเติบโตและการตอบสนองต่อสิ่งแวดล้อม เลือกฮอร์โมนเพื่อดูแหล่งที่สร้าง บทบาททางสรีรวิทยา และการใช้ประโยชน์ทางการเกษตร</p>
+      </header>
+      <div class="grid" id="grid"></div>
+    </div>
+    <footer><div class="wrap">ฮอร์โมนพืช 5 ชนิดหลัก · สื่อการเรียนรู้ชีววิทยา</div></footer>
+  </div>
+
+  <!-- DETAIL -->
+  <div class="view" id="view-detail">
+    <div class="wrap">
+      <div class="detail-inner" id="detail-inner"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const ICONS = {
+  auxin:'<svg viewBox="0 0 24 24"><path d="M12 21V8"/><path d="M12 12c0-3.3 2.5-6 5.5-6.5C17.5 9 15 12 12 12Z"/><path d="M12 16c-2.6 0-4.8-2-5-4.6 2.6-.2 4.8 1.7 5 4.6Z"/><path d="M9 4.5 12 2l3 2.5"/></svg>',
+  gibberellin:'<svg viewBox="0 0 24 24"><path d="M12 22V3"/><path d="M9 3h6"/><path d="M8.5 8.5h7"/><path d="M8.5 14h7"/><path d="M5 19.5c1.8-.6 3.1-1.7 4-3.3"/><path d="M19 19.5c-1.8-.6-3.1-1.7-4-3.3"/></svg>',
+  cytokinin:'<svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/><path d="M12 8.2v7.6"/></svg>',
+  aba:'<svg viewBox="0 0 24 24"><path d="M12 3s5.5 5.4 5.5 9.4A5.5 5.5 0 0 1 12 18a5.5 5.5 0 0 1-5.5-5.6C6.5 8.4 12 3 12 3Z"/><path d="M4 21h16"/></svg>',
+  ethylene:'<svg viewBox="0 0 24 24"><circle cx="8.5" cy="12" r="2.6"/><circle cx="15.5" cy="12" r="2.6"/><path d="M11.1 10.9h1.8M11.1 13.1h1.8"/><path d="M4 6.5c1-1 2-1 3 0M17 19c1-1 2-1 3 0"/></svg>'
+};
+
+const HORMONES = [
+  {
+    id:'auxin', th:'ออกซิน', en:'Auxin (IAA)',
+    tag:'ควบคุมการยืดตัวของเซลล์และการเอนเข้าหาแสง',
+    lede:'ฮอร์โมนพืชชนิดแรกที่ถูกค้นพบ ชนิดที่พบมากที่สุดในธรรมชาติคือ IAA (indole-3-acetic acid) เด่นเรื่องการควบคุมทิศทางการเจริญของต้นพืช',
+    source:[
+      '<b>เนื้อเยื่อเจริญปลายยอด</b> (apical meristem) เป็นแหล่งสร้างหลัก',
+      '<b>ใบอ่อนและตาอ่อน</b> ที่กำลังขยายตัว',
+      '<b>เมล็ดและผลอ่อน</b> ที่กำลังพัฒนา',
+      '<b>ปลายราก</b> สร้างได้ในปริมาณน้อย',
+      'ลำเลียงแบบมีทิศทาง (polar transport) จากยอดลงสู่โคน ผ่านเซลล์พาเรงคิมาข้างท่อลำเลียง'
+    ],
+    role:[
+      'กระตุ้นการ<b>ยืดตัวของเซลล์</b>บริเวณใต้ปลายยอด ทำให้ลำต้นสูงขึ้น',
+      'ควบคุมการ<b>เอนเข้าหาแสง</b> (phototropism) โดยสะสมด้านที่ไม่ได้รับแสงมากกว่า และการตอบสนองต่อ<b>แรงโน้มถ่วง</b> (gravitropism)',
+      'ทำให้เกิดการ<b>ข่มตาข้าง</b> (apical dominance) ตายอดยับยั้งการเจริญของตาข้าง',
+      'กระตุ้นการเกิด<b>รากแขนงและรากพิเศษ</b>',
+      '<b>ชะลอการหลุดร่วง</b>ของใบ ดอก และผล',
+      'ความเข้มข้นสูงเกินไปกลับ<b>ยับยั้ง</b>การเจริญของราก — รากไวต่อออกซินมากกว่าลำต้น'
+    ],
+    use:[
+      '<b>NAA / IBA</b> ใช้จุ่มหรือทาโคนกิ่ง เร่งการออกรากของกิ่งปักชำและกิ่งตอน',
+      '<b>2,4-D</b> ความเข้มข้นสูง ใช้เป็นสารกำจัดวัชพืชใบกว้างในนาข้าวและแปลงหญ้า',
+      'พ่นป้องกัน<b>ผลร่วงก่อนเก็บเกี่ยว</b>ในส้ม แอปเปิล และมะม่วง',
+      'ชักนำ<b>ผลไม่มีเมล็ด</b> (parthenocarpy) ในมะเขือเทศและแตงโม',
+      'ใช้ร่วมกับไซโทไคนินในการ<b>เพาะเลี้ยงเนื้อเยื่อ</b> เพื่อควบคุมการเกิดรากหรือยอด'
+    ],
+    note:'สัดส่วน <b>ออกซิน : ไซโทไคนิน</b> ในอาหารเพาะเลี้ยงเนื้อเยื่อเป็นตัวกำหนดว่าเนื้อเยื่อจะพัฒนาไปเป็นราก (ออกซินสูง) หรือยอด (ไซโทไคนินสูง)'
+  },
+  {
+    id:'gibberellin', th:'จิบเบอเรลลิน', en:'Gibberellin (GA)',
+    tag:'ยืดปล้องให้ต้นสูง กระตุ้นการงอกและการออกดอก',
+    lede:'ค้นพบจากเชื้อรา Gibberella fujikuroi ที่ทำให้ต้นข้าวเป็นโรค “ข้าวตัวผู้” สูงผิดปกติ ปัจจุบันพบมากกว่า 100 ชนิด โดย GA₃ ถูกใช้ทางการค้ามากที่สุด',
+    source:[
+      '<b>ยอดอ่อนและใบอ่อน</b> ที่กำลังเจริญ',
+      '<b>เอ็มบริโอในเมล็ด</b> ที่กำลังงอก',
+      '<b>ปลายราก</b> และ<b>ผลอ่อน</b>',
+      'ลำเลียงได้ทั้งทางไซเล็มและโฟลเอ็ม ไม่จำกัดทิศทางเหมือนออกซิน'
+    ],
+    role:[
+      'กระตุ้นการ<b>ยืดตัวของปล้อง</b> ทำให้ต้นสูงเด่นชัด โดยเฉพาะพืชพันธุ์เตี้ย',
+      '<b>ทำลายการพักตัว</b> (dormancy) ของเมล็ดและตา ทำให้งอกได้เร็วขึ้น',
+      'กระตุ้นชั้น aleurone ของเมล็ดธัญพืชให้สร้างเอนไซม์ <b>α-amylase</b> ย่อยแป้งในเอนโดสเปิร์มไปเลี้ยงเอ็มบริโอ',
+      'กระตุ้นการ<b>ออกดอก</b>ในพืชวันยาวและพืชที่ต้องการอากาศเย็น',
+      'ส่งเสริมการ<b>เจริญของผล</b>และการขยายขนาดผล',
+      'มีผลต่อการ<b>กำหนดเพศดอก</b> ในพืชบางชนิด เช่น แตงกวา'
+    ],
+    use:[
+      'พ่น <b>GA₃</b> ในองุ่นไร้เมล็ด เพื่อยืดช่อผลและเพิ่มขนาดผล',
+      'เร่งการงอกของเมล็ดพันธุ์ และใช้ในกระบวนการ<b>ทำมอลต์</b>ของอุตสาหกรรมเบียร์',
+      'กระตุ้นการ<b>ออกดอกนอกฤดู</b> และยืดช่อดอกไม้ประดับ',
+      'เพิ่มผลผลิตพืชที่กินลำต้นและใบ เช่น อ้อย ผักกินใบ คื่นช่าย',
+      'ในทางกลับกัน สาร<b>ชะลอการเจริญเติบโต</b> เช่น พาโคลบิวทราโซล ยับยั้งการสร้าง GA เพื่อทำมะม่วงนอกฤดูและทำให้ไม้กระถางทรงพุ่มเตี้ย'
+    ],
+    note:'GA และ ABA ทำงาน<b>ตรงข้ามกัน</b>ในการควบคุมการพักตัวของเมล็ด — GA กระตุ้นการงอก ส่วน ABA รักษาการพักตัวเอาไว้'
+  },
+  {
+    id:'cytokinin', th:'ไซโทไคนิน', en:'Cytokinin',
+    tag:'กระตุ้นการแบ่งเซลล์และชะลอการแก่ของใบ',
+    lede:'กลุ่มฮอร์โมนอนุพันธ์ของอะดีนีน เช่น zeatin และ kinetin ชื่อของมันมาจาก cytokinesis คือการแบ่งไซโทพลาซึมของเซลล์',
+    source:[
+      '<b>ปลายราก</b> เป็นแหล่งสร้างหลัก แล้วลำเลียงขึ้นสู่ยอดทางไซเล็ม',
+      '<b>เมล็ดและผลอ่อน</b> ที่กำลังพัฒนา',
+      '<b>เนื้อเยื่อเจริญ</b> ที่มีการแบ่งเซลล์สูง',
+      'พบมากในน้ำมะพร้าวอ่อน ซึ่งเป็นเอนโดสเปิร์มเหลว'
+    ],
+    role:[
+      'กระตุ้นการ<b>แบ่งเซลล์</b>ในเนื้อเยื่อเจริญ ร่วมกับออกซิน',
+      'กระตุ้นการ<b>เจริญของตาข้าง</b> ซึ่งเป็นการต้านฤทธิ์การข่มตาข้างของออกซิน',
+      '<b>ชะลอการแก่ชรา</b> (senescence) โดยชะลอการสลายตัวของคลอโรฟิลล์และโปรตีน ทำให้ใบเขียวนาน',
+      'ส่งเสริมการ<b>เปิดปากใบ</b> และการขยายตัวของเซลล์ใบ',
+      'ชักนำการสร้าง<b>คลอโรพลาสต์</b>และการเปลี่ยนสภาพของเนื้อเยื่อ',
+      'ดึงสารอาหารมาสะสมบริเวณที่มีความเข้มข้นสูง (nutrient sink)'
+    ],
+    use:[
+      'ใช้ <b>BA / kinetin</b> ในการเพาะเลี้ยงเนื้อเยื่อ เพื่อชักนำให้เกิดยอดจำนวนมากในการขยายพันธุ์กล้วยไม้และกล้วย',
+      '<b>ยืดอายุหลังการเก็บเกี่ยว</b>ของผักใบเขียว บรอกโคลี และไม้ตัดดอก',
+      'พ่นเพื่อ<b>เพิ่มขนาดผล</b>ในองุ่นและแอปเปิล',
+      'กระตุ้นการ<b>แตกตาข้าง</b> ทำให้ไม้ประดับมีทรงพุ่มแน่นสวยงาม'
+    ],
+    note:'ใบที่ถูกตัดออกจากต้นจะเหลืองเร็ว เพราะขาดไซโทไคนินที่ลำเลียงมาจากราก — จึงใช้อธิบายบทบาทของรากต่อความสดของยอดได้ชัดเจน'
+  },
+  {
+    id:'aba', th:'กรดแอบไซซิก', en:'Abscisic acid (ABA)',
+    tag:'ฮอร์โมนแห่งความเครียด ปิดปากใบและรักษาการพักตัว',
+    lede:'ฮอร์โมนยับยั้งการเจริญเติบโต มีบทบาทสำคัญยิ่งเมื่อพืชเผชิญภาวะแล้ง เค็ม หรือหนาวเย็น จึงถูกเรียกว่า “stress hormone”',
+    source:[
+      '<b>ใบแก่</b> สร้างในคลอโรพลาสต์จากสารตั้งต้นกลุ่มแคโรทีนอยด์',
+      '<b>ราก</b> สร้างเพิ่มขึ้นทันทีเมื่อดินขาดน้ำ แล้วส่งสัญญาณขึ้นไปยังใบ',
+      '<b>เมล็ดและผล</b> ที่กำลังสุกหรือกำลังเข้าสู่ระยะพักตัว',
+      '<b>หมวกราก</b> (root cap) ลำเลียงได้ทั้งทางไซเล็มและโฟลเอ็ม'
+    ],
+    role:[
+      'กระตุ้นการ<b>ปิดปากใบ</b>อย่างรวดเร็วเมื่อขาดน้ำ ลดการคายน้ำ',
+      '<b>รักษาการพักตัว</b>ของเมล็ดและตา ป้องกันการงอกก่อนเวลาอันควร',
+      '<b>ยับยั้งการเจริญเติบโต</b>ของต้น เป็นฤทธิ์ตรงข้ามกับออกซินและจิบเบอเรลลิน',
+      'ส่งเสริมการ<b>สะสมอาหารและโปรตีน</b>ในเมล็ดระยะพัฒนา และช่วยให้เมล็ดทนต่อการสูญเสียน้ำ',
+      'เพิ่ม<b>ความทนทานต่อความเครียด</b> ทั้งความแล้ง ความเค็ม และอุณหภูมิต่ำ',
+      'เกี่ยวข้องกับการ<b>หลุดร่วง</b>ของใบและผลในพืชบางชนิด'
+    ],
+    use:[
+      'พ่นก่อน<b>ย้ายกล้าปลูก</b> เพื่อลดการคายน้ำและลดอาการเหี่ยวเฉา',
+      'ใช้เพิ่ม<b>ความทนแล้ง</b>ให้พืชไร่ในพื้นที่ที่น้ำจำกัด',
+      'ควบคุมการพักตัวของ<b>เมล็ดพันธุ์</b>เพื่อการเก็บรักษา และป้องกันการงอกคาต้นในข้าวและข้าวสาลี',
+      'กระตุ้นการ<b>สร้างสี</b>ของผิวผลในองุ่นแดง',
+      '<b>ยืดอายุไม้กระถาง</b>ระหว่างการขนส่งและวางจำหน่าย'
+    ],
+    note:'แม้ชื่อจะมาจาก abscission (การหลุดร่วง) แต่ปัจจุบันพบว่าฮอร์โมนที่ควบคุมการร่วงโดยตรงคือ <b>เอทิลีน</b> มากกว่า ABA'
+  },
+  {
+    id:'ethylene', th:'เอทิลีน', en:'Ethylene (C₂H₄)',
+    tag:'แก๊สเร่งการสุกของผลและการหลุดร่วงของใบ',
+    lede:'ฮอร์โมนพืชชนิดเดียวที่อยู่ในสถานะแก๊ส จึงแพร่กระจายระหว่างเซลล์และระหว่างผลไม้ที่วางอยู่ใกล้กันได้',
+    source:[
+      'สร้างได้จาก<b>เนื้อเยื่อเกือบทุกส่วน</b> โดยเฉพาะส่วนที่กำลังเสื่อมสภาพ',
+      '<b>ผลที่กำลังสุก</b> ในกลุ่ม climacteric เช่น กล้วย มะม่วง มะเขือเทศ',
+      '<b>ใบแก่ ดอกที่กำลังโรย และบริเวณข้อ</b>',
+      '<b>เนื้อเยื่อที่บาดเจ็บ</b> หรืออยู่ในภาวะเครียด เช่น น้ำท่วมขังและถูกกดทับ'
+    ],
+    role:[
+      '<b>เร่งการสุก</b>ของผล โดยกระตุ้นเอนไซม์ย่อยผนังเซลล์ ทำให้ผลนิ่ม หวาน และเปลี่ยนสี',
+      'เร่งการ<b>หลุดร่วง</b>ของใบ ดอก และผล โดยกระตุ้นการสร้างชั้น abscission',
+      'กระตุ้นการ<b>เสื่อมสภาพของดอก</b>และการแก่ชราของเนื้อเยื่อ',
+      'ทำให้ต้นกล้าที่ชนสิ่งกีดขวางแสดง <b>triple response</b> คือ ลำต้นสั้นลง อ้วนขึ้น และเอนในแนวนอน',
+      'กระตุ้นการ<b>ออกดอกในสับปะรด</b>และพืชวงศ์เดียวกัน',
+      'เป็นสัญญาณตอบสนองต่อ<b>ความเครียด</b>และการเข้าทำลายของเชื้อโรค'
+    ],
+    use:[
+      '<b>บ่มผลไม้</b>ด้วยแก๊สเอทิลีนในห้องบ่ม หรือใช้ถ่านแก๊ส/ใบขี้เหล็กในภูมิปัญญาดั้งเดิม',
+      '<b>เอทีฟอน (ethephon)</b> สารที่ปล่อยเอทิลีน ใช้เร่งสุกในมะเขือเทศและเร่งการเปลี่ยนสีผิวส้ม',
+      '<b>บังคับสับปะรดออกดอก</b>พร้อมกันทั้งแปลง เพื่อวางแผนเก็บเกี่ยว',
+      'เร่งการ<b>ไหลของน้ำยางพารา</b> ด้วยการทาเอทีฟอนบริเวณหน้ากรีด',
+      'ทำให้ผล<b>ร่วงพร้อมกัน</b>เพื่อเก็บเกี่ยวด้วยเครื่องจักรในเชอร์รีและวอลนัต',
+      'ในทางกลับกัน ใช้ <b>KMnO₄</b> ดูดซับเอทิลีนในห้องเย็น เพื่อยืดอายุการเก็บรักษาผักผลไม้'
+    ],
+    note:'“ผลไม้เน่าหนึ่งผลทำให้ทั้งเข่งเสีย” อธิบายได้ด้วยเอทิลีน — ผลที่สุกจัดปล่อยแก๊สออกมาเร่งให้ผลข้างเคียงสุกตามกันไป'
+  }
+];
+
+const ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg>';
+const BACK_ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6"/><path d="m11.5 6-6 6 6 6"/></svg>';
+
+const grid = document.getElementById('grid');
+const viewHome = document.getElementById('view-home');
+const viewDetail = document.getElementById('view-detail');
+const detailInner = document.getElementById('detail-inner');
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* build home cards */
+grid.innerHTML = HORMONES.map((h,i)=>`
+  <button class="card" data-id="${h.id}" style="animation-delay:${reduce?0:80+i*70}ms">
+    <span class="icon" aria-hidden="true">${ICONS[h.id]}</span>
+    <h2>${h.th}<span class="en">${h.en}</span></h2>
+    <p>${h.tag}</p>
+    <span class="go">ดูรายละเอียด <span class="go-badge" aria-hidden="true">${ARROW}</span></span>
+  </button>`).join('');
+
+grid.addEventListener('click', e=>{
+  const card = e.target.closest('.card');
+  if(card) location.hash = '#/' + card.dataset.id;
+});
+
+function block(label, title, items){
+  return `<section class="block">
+    <p class="block-label">${label}</p>
+    <h3>${title}</h3>
+    <ul class="points">${items.map(t=>`<li>${t}</li>`).join('')}</ul>
+  </section>`;
+}
+
+function renderDetail(h){
+  const i = HORMONES.indexOf(h);
+  const prev = HORMONES[(i-1+HORMONES.length)%HORMONES.length];
+  const next = HORMONES[(i+1)%HORMONES.length];
+  detailInner.innerHTML = `
+    <button class="back" id="backBtn">${BACK_ARROW} กลับไปเลือกฮอร์โมน</button>
+    <div class="detail-head">
+      <span class="icon" aria-hidden="true">${ICONS[h.id]}</span>
+      <div>
+        <h1 class="detail-title">${h.th}</h1>
+        <p class="detail-en">${h.en}</p>
+      </div>
+    </div>
+    <p class="detail-lede">${h.lede}</p>
+    <hr class="rule">
+    ${block('Source','แหล่งที่สร้างในพืช',h.source)}
+    ${block('Function','หน้าที่และบทบาททางสรีรวิทยา',h.role)}
+    ${block('Application','การนำไปใช้ประโยชน์ทางการเกษตร',h.use)}
+    <div class="note">${h.note}</div>
+    <nav class="nextnav">
+      <button data-goto="${prev.id}">← ${prev.th}</button>
+      <button data-goto="${next.id}">${next.th} →</button>
+    </nav>`;
+  detailInner.querySelector('#backBtn').addEventListener('click', ()=>{
+    if(history.length>1) history.back(); else location.hash='';
+  });
+  detailInner.querySelectorAll('[data-goto]').forEach(b=>{
+    b.addEventListener('click', ()=> location.hash = '#/' + b.dataset.goto);
+  });
+}
+
+let current = null;
+function swap(to, from){
+  if(to === from) return;
+  from.classList.add('is-leaving');
+  from.classList.remove('is-active');
+  const delay = reduce ? 0 : 200;
+  window.setTimeout(()=>{
+    from.classList.remove('is-leaving');
+    to.classList.add('is-active');
+  }, delay);
+}
+
+function route(){
+  const id = (location.hash.match(/^#\/(.+)$/)||[])[1];
+  const h = HORMONES.find(x=>x.id===id);
+  if(h){
+    renderDetail(h);
+    document.title = `${h.th} · ฮอร์โมนพืช`;
+    swap(viewDetail, viewHome);
+    window.scrollTo({top:0, behavior: reduce ? 'auto' : 'smooth'});
+    current = h.id;
+  }else{
+    document.title = 'ฮอร์โมนพืช · Plant Hormones';
+    swap(viewHome, viewDetail);
+    if(current) window.scrollTo({top:0, behavior:'auto'});
+    current = null;
+  }
+}
+
+window.addEventListener('hashchange', route);
+route();
+</script>
