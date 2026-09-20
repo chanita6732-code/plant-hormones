@@ -281,11 +281,11 @@ h1{
   max-height:min(70vh,480px);overflow-y:auto;overscroll-behavior:contain;
   background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
   box-shadow:var(--shadow-hover);padding:20px 44px 18px 20px;
-  opacity:0;transform:scale(.94);pointer-events:none;
-  transition:opacity .22s var(--ease), transform .22s var(--ease);
+  opacity:0;pointer-events:none;
+  transition:opacity .18s var(--ease);
   scrollbar-width:thin;scrollbar-color:var(--line) transparent;
 }
-.plant-popup.is-open{opacity:1;transform:scale(1);pointer-events:auto}
+.plant-popup.is-open{opacity:1;pointer-events:auto}
 .plant-popup::-webkit-scrollbar{width:6px}
 .plant-popup::-webkit-scrollbar-track{background:transparent}
 .plant-popup::-webkit-scrollbar-thumb{background:var(--line);border-radius:999px}
