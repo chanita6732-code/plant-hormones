@@ -204,13 +204,9 @@ h1{
 
 /* ── interactive plant diagram (home) ─────────────────── */
 .diagram-section{padding-bottom:clamp(64px,12vh,120px)}
-.diagram-body{
-  display:grid;grid-template-columns:minmax(220px,320px) 1fr;
-  gap:clamp(28px,5vw,56px);align-items:start;
-}
-@media (max-width:760px){.diagram-body{grid-template-columns:1fr}}
+.diagram-hint{color:var(--muted);font-weight:300;font-size:.92rem;margin:0 0 32px;max-width:52ch}
 
-.plant-figure{position:relative;width:100%;max-width:320px;aspect-ratio:300/420;margin:0 auto;user-select:none}
+.plant-figure{position:relative;width:100%;max-width:380px;aspect-ratio:300/420;margin:0 auto;user-select:none}
 .plant-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .plant-svg .ground{stroke:var(--line);stroke-width:1.5;stroke-dasharray:4 5}
 .plant-svg .soil{fill:var(--surface-2)}
@@ -276,41 +272,54 @@ h1{
 .p-marker.is-active .p-tag{color:var(--accent);border-color:color-mix(in srgb, var(--accent) 40%, var(--line))}
 .p-marker[data-part="flower"].is-active .p-tag{color:var(--fruit)}
 
-.diagram-panel{
-  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-  padding:clamp(24px,4vw,36px);box-shadow:var(--shadow);
-  transition:opacity .28s var(--ease),transform .28s var(--ease);
-}
-.diagram-panel.is-updating{opacity:0;transform:translateY(6px)}
-.panel-eyebrow{font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:500;margin:0 0 8px}
-.panel-title{font-size:1.4rem;font-weight:600;margin:0 0 4px;line-height:1.35}
-.panel-en{font-family:"Inter",sans-serif;font-size:.84rem;color:var(--muted);margin:0 0 14px}
-.panel-intro{color:var(--muted);font-weight:300;font-size:.98rem;margin:0 0 24px;max-width:60ch}
 .panel-label{font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:0 0 14px}
-.panel-hormones{display:flex;flex-direction:column;gap:12px}
-.h-item{
-  display:flex;gap:14px;align-items:flex-start;
-  padding:16px;border:1px solid var(--line);border-radius:14px;
-  transition:border-color .3s var(--ease),background-color .3s var(--ease);
-}
-.h-item:hover{border-color:color-mix(in srgb, var(--accent) 32%, var(--line));background:var(--surface-2)}
-.h-icon{
-  width:36px;height:36px;flex:none;border-radius:10px;
-  background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;
-}
-.h-icon svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.h-body h4{margin:0 0 3px;font-size:1rem;font-weight:600}
-.h-body h4 span{font-family:"Inter",sans-serif;font-weight:400;font-size:.78rem;color:var(--muted);margin-left:6px}
-.h-body p{margin:0 0 8px;color:var(--muted);font-size:.9rem;font-weight:300;line-height:1.65}
-.h-link{
-  appearance:none;background:none;border:0;padding:0;font:inherit;cursor:pointer;
-  color:var(--accent);font-size:.84rem;font-weight:500;
-  display:inline-flex;align-items:center;gap:5px;
-}
-.h-link svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .3s var(--ease)}
-.h-link:hover svg{transform:translateX(3px)}
 
-@media (max-width:560px){.plant-figure{max-width:240px}}
+/* ── plant popup (tap a marker) ───────────────────────── */
+.plant-popup-scrim{position:fixed;inset:0;z-index:39;background:transparent}
+.plant-popup{
+  position:fixed;z-index:40;width:min(320px,92vw);
+  max-height:min(70vh,480px);overflow-y:auto;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-hover);padding:20px 44px 18px 20px;
+  opacity:0;transform:scale(.94);pointer-events:none;
+  transition:opacity .22s var(--ease), transform .22s var(--ease);
+}
+.plant-popup.is-open{opacity:1;transform:scale(1);pointer-events:auto}
+.plant-popup::before{
+  content:"";position:absolute;width:14px;height:14px;
+  background:var(--surface);border:1px solid var(--line);
+  left:var(--arrow-left,20px);transform:translateX(-50%) rotate(45deg);
+}
+.plant-popup[data-arrow="top"]::before{top:-8px;border-right:none;border-bottom:none}
+.plant-popup[data-arrow="bottom"]::before{bottom:-8px;border-left:none;border-top:none}
+.plant-popup-close{
+  position:absolute;top:12px;right:12px;
+  width:28px;height:28px;flex:none;border-radius:50%;cursor:pointer;
+  border:1px solid var(--line);background:var(--surface);color:var(--muted);
+  display:grid;place-items:center;
+  transition:color .25s var(--ease),border-color .25s var(--ease);
+}
+.plant-popup-close:hover{color:var(--text);border-color:color-mix(in srgb, var(--accent) 35%, var(--line))}
+.plant-popup-close svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.pp-eyebrow{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500;margin:0 0 6px}
+.pp-title{font-size:1.22rem;font-weight:600;margin:0 0 10px;line-height:1.35}
+.pp-intro{color:var(--muted);font-weight:300;font-size:.88rem;line-height:1.6;margin:0 0 16px}
+.pp-list{display:flex;flex-direction:column;gap:8px}
+.pp-item{
+  appearance:none;width:100%;text-align:start;font:inherit;color:inherit;cursor:pointer;
+  display:flex;align-items:center;gap:12px;
+  border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px;
+  transition:border-color .25s var(--ease),background-color .25s var(--ease);
+}
+.pp-item:hover{border-color:color-mix(in srgb, var(--accent) 35%, var(--line));background:var(--surface-2)}
+.pp-item-icon{width:32px;height:32px;flex:none;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.pp-item-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.pp-item-name{flex:1;min-width:0;font-weight:600;font-size:.92rem;display:flex;flex-direction:column;line-height:1.35}
+.pp-item-name small{font-family:"Inter",sans-serif;font-weight:400;font-size:.74rem;color:var(--muted)}
+.pp-item-go{flex:none;font-size:.78rem;color:var(--accent);font-weight:500;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.pp-item-go svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
+
+@media (max-width:560px){.plant-figure{max-width:280px}}
 
 /* ── auxin lab (interactive dose-response) ────────────── */
 .lab-section{padding-bottom:clamp(64px,12vh,120px)}
@@ -691,9 +700,9 @@ try{
       </header>
 
       <section class="diagram-section" aria-labelledby="diagramHeading">
-        <h2 id="diagramHeading" style="font-size:1.1rem;font-weight:600;margin:0 0 20px">ผังตำแหน่งฮอร์โมนบนต้นพืช</h2>
-        <div class="diagram-body">
-          <div class="plant-figure">
+        <h2 id="diagramHeading" style="font-size:1.1rem;font-weight:600;margin:0 0 8px">ผังตำแหน่งฮอร์โมนบนต้นพืช</h2>
+        <p class="diagram-hint">แตะตำแหน่งบนต้นพืชด้านล่างเพื่อดูว่าฮอร์โมนชนิดใดทำงานอยู่บริเวณนั้น</p>
+        <div class="plant-figure" id="plantFigure">
             <svg class="plant-svg" viewBox="0 0 300 420" aria-hidden="true" focusable="false">
               <rect class="soil" x="14" y="260" width="272" height="148" rx="16"/>
               <line class="ground" x1="14" y1="260" x2="286" y2="260"/>
@@ -716,8 +725,6 @@ try{
               <circle class="fruit-shine" style="animation-delay:1.7s" cx="244" cy="147" r="2.2"/>
             </svg>
             <div class="p-markers" id="plantMarkers"></div>
-          </div>
-          <div class="diagram-panel" id="diagramPanel"></div>
         </div>
       </section>
     </div>
@@ -801,6 +808,14 @@ try{
 </main>
 
 <footer><div class="wrap">ฮอร์โมนพืช 5 ชนิดหลัก · สื่อการเรียนรู้ชีววิทยา</div></footer>
+
+<div class="plant-popup-scrim" id="plantPopupScrim" hidden></div>
+<div class="plant-popup" id="plantPopup" role="dialog" aria-hidden="true">
+  <button class="plant-popup-close" id="plantPopupClose" type="button" aria-label="ปิด">
+    <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>
+  </button>
+  <div id="plantPopupBody"></div>
+</div>
 
 <script>
 const ICONS = {
@@ -1077,63 +1092,99 @@ const PARTS = [
 ];
 
 const plantMarkers = document.getElementById('plantMarkers');
-const diagramPanel = document.getElementById('diagramPanel');
+const plantPopup = document.getElementById('plantPopup');
+const plantPopupBody = document.getElementById('plantPopupBody');
+const plantPopupScrim = document.getElementById('plantPopupScrim');
+const plantPopupClose = document.getElementById('plantPopupClose');
 
 plantMarkers.innerHTML = PARTS.map((p,i)=>`
-  <button class="p-marker${i===0?' is-active':''}" data-part="${p.id}" style="--x:${p.x}%;--y:${p.y}%" aria-pressed="${i===0}">
+  <button class="p-marker" data-part="${p.id}" style="--x:${p.x}%;--y:${p.y}%" aria-pressed="false">
     <span class="p-dot">${i+1}</span>
     <span class="p-tag">${i+1}. ${p.th}</span>
   </button>`).join('');
 
-function renderPanel(part){
-  diagramPanel.innerHTML = `
-    <p class="panel-eyebrow">บริเวณที่ ${PARTS.indexOf(part)+1}</p>
-    <h3 class="panel-title">${part.th}</h3>
-    <p class="panel-en">${part.en}</p>
-    <p class="panel-intro">${part.intro}</p>
-    <p class="panel-label">ฮอร์โมนพืชที่มีบทบาทในบริเวณนี้</p>
-    <div class="panel-hormones">
+function renderPopupBody(part){
+  plantPopupBody.innerHTML = `
+    <p class="pp-eyebrow">บริเวณที่ ${PARTS.indexOf(part)+1} · ${part.en}</p>
+    <h3 class="pp-title">${part.th}</h3>
+    <p class="pp-intro">${part.intro}</p>
+    <div class="pp-list">
       ${part.hormones.map(h=>{
         const H = HORMONES.find(x=>x.id===h.id);
-        return `<div class="h-item">
-          <span class="h-icon" aria-hidden="true">${ICONS[H.id]}</span>
-          <div class="h-body">
-            <h4>${H.th}<span>${H.en}</span></h4>
-            <p>${h.note}</p>
-            <button class="h-link" data-goto="${H.id}">อ่านข้อมูลเจาะลึก ${ARROW}</button>
-          </div>
-        </div>`;
+        return `<button class="pp-item" data-goto="${H.id}">
+          <span class="pp-item-icon" aria-hidden="true">${ICONS[H.id]}</span>
+          <span class="pp-item-name">${H.th}<small>${H.en}</small></span>
+          <span class="pp-item-go">ดูรายละเอียด ${ARROW}</span>
+        </button>`;
       }).join('')}
     </div>`;
-  diagramPanel.querySelectorAll('[data-goto]').forEach(b=>{
+  plantPopupBody.querySelectorAll('[data-goto]').forEach(b=>{
     b.addEventListener('click', ()=> location.hash = '#/' + b.dataset.goto);
   });
 }
 
-let activePartId = PARTS[0].id;
-function selectPart(id){
-  if(id === activePartId) return;
+function positionPopup(markerEl){
+  const rect = markerEl.getBoundingClientRect();
+  const popRect = plantPopup.getBoundingClientRect();
+  const margin = 14, headerGap = 76;
+  const spaceBelow = window.innerHeight - rect.bottom;
+  const spaceAbove = rect.top - headerGap;
+  let top, arrow;
+  if(spaceBelow >= popRect.height + 20 || spaceBelow > spaceAbove){
+    top = rect.bottom + 12; arrow = 'top';
+  }else{
+    top = rect.top - popRect.height - 12; arrow = 'bottom';
+  }
+  top = Math.max(headerGap, Math.min(top, window.innerHeight - popRect.height - margin));
+  let left = rect.left + rect.width/2 - popRect.width/2;
+  left = Math.max(margin, Math.min(left, window.innerWidth - popRect.width - margin));
+  plantPopup.style.top = top + 'px';
+  plantPopup.style.left = left + 'px';
+  plantPopup.dataset.arrow = arrow;
+  const arrowLeft = Math.max(16, Math.min(rect.left + rect.width/2 - left, popRect.width - 16));
+  plantPopup.style.setProperty('--arrow-left', arrowLeft + 'px');
+}
+
+let activePartId = null;
+function openPopup(part, markerEl){
+  renderPopupBody(part);
+  plantPopup.classList.add('is-open');
+  plantPopup.setAttribute('aria-hidden', 'false');
+  plantPopupScrim.hidden = false;
+  positionPopup(markerEl);
+  requestAnimationFrame(()=> positionPopup(markerEl));
+}
+function closePopup(){
+  plantPopup.classList.remove('is-open');
+  plantPopup.setAttribute('aria-hidden', 'true');
+  plantPopupScrim.hidden = true;
+  plantMarkers.querySelectorAll('.p-marker.is-active').forEach(m=>{
+    m.classList.remove('is-active'); m.setAttribute('aria-pressed', 'false');
+  });
+  activePartId = null;
+}
+function selectPart(id, markerEl){
+  if(id === activePartId){ closePopup(); return; }
   activePartId = id;
-  const part = PARTS.find(p=>p.id===id);
   plantMarkers.querySelectorAll('.p-marker').forEach(m=>{
     const isActive = m.dataset.part === id;
     m.classList.toggle('is-active', isActive);
     m.setAttribute('aria-pressed', isActive);
   });
-  if(reduce){ renderPanel(part); return; }
-  diagramPanel.classList.add('is-updating');
-  window.setTimeout(()=>{
-    renderPanel(part);
-    diagramPanel.classList.remove('is-updating');
-  }, 180);
+  openPopup(PARTS.find(p=>p.id===id), markerEl);
 }
 
 plantMarkers.addEventListener('click', e=>{
   const marker = e.target.closest('.p-marker');
-  if(marker) selectPart(marker.dataset.part);
+  if(marker) selectPart(marker.dataset.part, marker);
 });
-
-renderPanel(PARTS[0]);
+plantPopupClose.addEventListener('click', closePopup);
+plantPopupScrim.addEventListener('click', closePopup);
+document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closePopup(); });
+window.addEventListener('resize', ()=>{
+  const activeMarker = plantMarkers.querySelector('.p-marker.is-active');
+  if(activeMarker) positionPopup(activeMarker);
+});
 
 /* ── comparison table (view: #/compare) ───────────────── */
 const compareTable = document.getElementById('compareTable');
@@ -1427,6 +1478,7 @@ function swapTo(key){
 }
 
 function route(){
+  closePopup();
   const seg = (location.hash.match(/^#\/?(.*)$/)||[])[1] || '';
   let key;
   if(seg === '' || seg === 'home') key = 'home';
