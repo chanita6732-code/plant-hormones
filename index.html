@@ -277,14 +277,19 @@ h1{
 /* ── plant popup (tap a marker) ───────────────────────── */
 .plant-popup-scrim{position:fixed;inset:0;z-index:39;background:transparent}
 .plant-popup{
-  position:fixed;z-index:40;width:min(320px,92vw);
-  max-height:min(70vh,480px);overflow-y:auto;
+  position:absolute;z-index:40;width:min(320px,92vw);
+  max-height:min(70vh,480px);overflow-y:auto;overscroll-behavior:contain;
   background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
   box-shadow:var(--shadow-hover);padding:20px 44px 18px 20px;
   opacity:0;transform:scale(.94);pointer-events:none;
   transition:opacity .22s var(--ease), transform .22s var(--ease);
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
 }
 .plant-popup.is-open{opacity:1;transform:scale(1);pointer-events:auto}
+.plant-popup::-webkit-scrollbar{width:6px}
+.plant-popup::-webkit-scrollbar-track{background:transparent}
+.plant-popup::-webkit-scrollbar-thumb{background:var(--line);border-radius:999px}
+.plant-popup::-webkit-scrollbar-thumb:hover{background:var(--muted)}
 .plant-popup::before{
   content:"";position:absolute;width:14px;height:14px;
   background:var(--surface);border:1px solid var(--line);
@@ -1138,8 +1143,8 @@ function positionPopup(markerEl){
   top = Math.max(headerGap, Math.min(top, window.innerHeight - popRect.height - margin));
   let left = rect.left + rect.width/2 - popRect.width/2;
   left = Math.max(margin, Math.min(left, window.innerWidth - popRect.width - margin));
-  plantPopup.style.top = top + 'px';
-  plantPopup.style.left = left + 'px';
+  plantPopup.style.top = (top + window.scrollY) + 'px';
+  plantPopup.style.left = (left + window.scrollX) + 'px';
   plantPopup.dataset.arrow = arrow;
   const arrowLeft = Math.max(16, Math.min(rect.left + rect.width/2 - left, popRect.width - 16));
   plantPopup.style.setProperty('--arrow-left', arrowLeft + 'px');
