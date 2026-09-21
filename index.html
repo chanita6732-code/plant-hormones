@@ -7,7 +7,7 @@
 <meta name="description" content="เว็บนำเสนอฮอร์โมนพืช 5 ชนิด: ออกซิน จิบเบอเรลลิน ไซโทไคนิน กรดแอบไซซิก และเอทิลีน พร้อมผังต้นพืชแบบคลิกได้ ตารางเปรียบเทียบ และแบบทดสอบ">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Taviraj:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Taviraj:ital,wght@1,500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#fbfcfa;
@@ -106,7 +106,7 @@ a{color:inherit}
   display:grid;place-items:center;
   transition:color .3s var(--ease);
 }
-.brand-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.brand-icon svg{width:20px;height:20px}
 .brand-text{display:flex;flex-direction:column;line-height:1.3}
 .brand-text strong{font-size:.98rem;font-weight:600}
 .brand-text span{font-family:"Inter",sans-serif;font-size:.68rem;color:var(--muted);letter-spacing:.04em}
@@ -163,8 +163,8 @@ a{color:inherit}
 .stage{position:relative;min-height:calc(100vh - 68px)}
 .view{
   opacity:0;
-  transform:translateY(14px);
-  transition:opacity .42s var(--ease), transform .42s var(--ease);
+  transform:translateY(8px);
+  transition:opacity .2s var(--ease), transform .2s var(--ease);
   pointer-events:none;
   position:absolute;
   inset:0 0 auto 0;
@@ -208,6 +208,23 @@ h1{
 .hero-cta:hover{transform:translateX(2px)}
 .hero-cta:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .hero-cta svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;align-items:center}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center;min-height:260px}
+.hero-visual::before{
+  content:"";position:absolute;width:230px;height:230px;border-radius:50%;
+  background:radial-gradient(circle, color-mix(in srgb, var(--accent) 26%, transparent) 0%, transparent 72%);
+}
+.hero-mark{position:relative;width:120px;height:120px;color:var(--accent);animation:hero-float 6s ease-in-out infinite}
+.hero-mark svg{width:100%;height:100%}
+.hero-dot{position:absolute;border-radius:50%;animation:hero-float 5.5s ease-in-out infinite}
+.hero-dot--fruit{width:15px;height:15px;background:var(--fruit);top:26%;right:24%;animation-delay:.5s}
+.hero-dot--ink{width:11px;height:11px;background:var(--ink);bottom:24%;left:26%;animation-delay:1.3s}
+@keyframes hero-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media (max-width:820px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-visual{display:none}
+}
 
 /* ── interactive plant diagram ─────────────────────────── */
 .diagram-section{padding-bottom:clamp(64px,12vh,120px)}
@@ -676,7 +693,7 @@ try{
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="#/" aria-label="กลับหน้าแรก">
-      <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20c8 0 14-5 16-16C11 4 5 9 4 20Z"/></svg></span>
+      <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20c8 0 14-5 16-16C11 4 5 9 4 20Z" fill="currentColor"/><path d="M4 20c2-6 6-10 12-13" stroke="var(--bg)" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg></span>
       <span class="brand-text"><strong>ฮอร์โมนพืช</strong><span>PLANT PHYSIOLOGY</span></span>
     </a>
     <span class="nav-divider" aria-hidden="true"></span>
@@ -697,14 +714,26 @@ try{
   <!-- HOME: landing -->
   <div class="view is-active" id="view-home">
     <div class="wrap">
-      <header class="view-head is-hero">
-        <p class="eyebrow">Plant Physiology</p>
-        <h1>ฮอร์โมนพืช</h1>
-        <p class="lede">สารเคมีปริมาณเล็กน้อยที่พืชสร้างขึ้นเอง แล้วลำเลียงไปควบคุมการเจริญเติบโตและการตอบสนองต่อสิ่งแวดล้อม ตั้งแต่การยืดตัวของเซลล์ การออกดอกออกผล ไปจนถึงการรับมือกับความเครียด สำรวจฮอร์โมนทั้ง 5 ชนิดได้จากเมนูด้านบน หรือเริ่มจากผังตำแหน่งบนต้นพืชแบบอินเทอร์แอกทีฟ</p>
-        <div class="hero-actions">
-          <a class="hero-cta" href="#/diagram">ดูผังต้นพืช <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></a>
+      <div class="hero-grid">
+        <header class="view-head is-hero">
+          <p class="eyebrow">Plant Physiology</p>
+          <h1>ฮอร์โมนพืช</h1>
+          <p class="lede">สารเคมีปริมาณเล็กน้อยที่พืชสร้างขึ้นเอง แล้วลำเลียงไปควบคุมการเจริญเติบโตและการตอบสนองต่อสิ่งแวดล้อม ตั้งแต่การยืดตัวของเซลล์ การออกดอกออกผล ไปจนถึงการรับมือกับความเครียด สำรวจฮอร์โมนทั้ง 5 ชนิดได้จากเมนูด้านบน หรือเริ่มจากผังตำแหน่งบนต้นพืชแบบอินเทอร์แอกทีฟ</p>
+          <div class="hero-actions">
+            <a class="hero-cta" href="#/diagram">ดูผังต้นพืช <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></a>
+          </div>
+        </header>
+        <div class="hero-visual" aria-hidden="true">
+          <span class="hero-dot hero-dot--fruit"></span>
+          <span class="hero-dot hero-dot--ink"></span>
+          <span class="hero-mark">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 20c8 0 14-5 16-16C11 4 5 9 4 20Z" fill="currentColor"/>
+              <path d="M4 20c2-6 6-10 12-13" stroke="var(--bg)" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+            </svg>
+          </span>
         </div>
-      </header>
+      </div>
     </div>
   </div>
 
@@ -1488,7 +1517,7 @@ function swapTo(key){
   const to = VIEWS[key];
   from.classList.add('is-leaving');
   from.classList.remove('is-active');
-  const delay = reduce ? 0 : 200;
+  const delay = reduce ? 0 : 220;
   window.setTimeout(()=>{
     from.classList.remove('is-leaving');
     to.classList.add('is-active');
