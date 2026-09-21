@@ -1523,6 +1523,14 @@ function setActiveNav(key){
   });
 }
 
+function replayPlantGrowth(){
+  const svg = document.querySelector('#view-diagram .plant-svg');
+  if(!svg) return;
+  svg.querySelectorAll('.root,.trunk,.branch,.fruit-stem,.root-tip,.fruit-calyx,.leaf,.fruit,.fruit-shade').forEach(el=>{
+    el.replaceWith(el.cloneNode(true));
+  });
+}
+
 function swapTo(key){
   if(key === activeViewKey) return;
   const from = VIEWS[activeViewKey];
@@ -1533,6 +1541,7 @@ function swapTo(key){
   window.setTimeout(()=>{
     from.classList.remove('is-leaving');
     to.classList.add('is-active');
+    if(key === 'diagram') replayPlantGrowth();
   }, delay);
   activeViewKey = key;
 }
