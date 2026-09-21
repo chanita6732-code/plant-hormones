@@ -238,24 +238,28 @@ h1{
 .plant-svg .root-tip{fill:var(--surface);stroke:var(--muted);stroke-width:2.5}
 .plant-svg .leaf{fill:var(--accent);opacity:.85}
 .plant-svg .fruit-stem{stroke:var(--trunk);stroke-width:2;stroke-linecap:round;fill:none}
+.plant-svg .fruit-calyx{stroke:var(--trunk);stroke-width:1.8;stroke-linecap:round;fill:none}
 .plant-svg .fruit{fill:var(--fruit)}
-.plant-svg .fruit-shine{fill:#fff;opacity:.4}
+.plant-svg .fruit-shade{pointer-events:none}
 
-/* gentle fade-in entrance for the hero plant */
+/* entrance: trunk/branches fade in, leaves and fruit grow outward from
+   the point where they attach to the branch instead of fading in place */
 @keyframes fade-in{from{opacity:0}to{opacity:1}}
-@keyframes fade-in-85{from{opacity:0}to{opacity:.85}}
-@keyframes fade-in-40{from{opacity:0}to{opacity:.4}}
+@keyframes grow-out{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+@keyframes grow-out-85{from{opacity:0;transform:scale(0)}to{opacity:.85;transform:scale(1)}}
 .plant-svg .root,.plant-svg .trunk,.plant-svg .branch,.plant-svg .fruit-stem,
-.plant-svg .root-tip,.plant-svg .fruit{
-  opacity:0;animation:fade-in .45s var(--ease) forwards;
+.plant-svg .root-tip,.plant-svg .fruit-calyx{
+  opacity:0;animation:fade-in .4s var(--ease) forwards;
 }
 .plant-svg .leaf{
-  transform-box:fill-box;transform-origin:center;
-  opacity:0;animation:fade-in-85 .45s var(--ease) forwards;
+  transform-box:fill-box;transform-origin:0% 50%;
+  opacity:0;transform:scale(0);
+  animation:grow-out-85 .5s var(--ease) forwards;
 }
-.plant-svg .fruit-shine{
-  transform-box:fill-box;transform-origin:center;
-  opacity:0;animation:fade-in-40 .45s var(--ease) forwards;
+.plant-svg .fruit,.plant-svg .fruit-shade{
+  transform-box:fill-box;transform-origin:34% 30%;
+  opacity:0;transform:scale(0);
+  animation:grow-out .5s var(--ease) forwards;
 }
 
 .p-markers{position:absolute;inset:0}
@@ -748,6 +752,13 @@ try{
       <section class="diagram-section">
         <div class="plant-figure" id="plantFigure">
             <svg class="plant-svg" viewBox="0 0 300 420" aria-hidden="true" focusable="false">
+              <defs>
+                <radialGradient id="fruitShade" cx="34%" cy="30%" r="75%">
+                  <stop offset="0%" stop-color="#fff" stop-opacity=".55"/>
+                  <stop offset="48%" stop-color="#fff" stop-opacity="0"/>
+                  <stop offset="100%" stop-color="#000" stop-opacity=".22"/>
+                </radialGradient>
+              </defs>
               <rect class="soil" x="14" y="260" width="272" height="148" rx="16"/>
               <line class="ground" x1="14" y1="260" x2="286" y2="260"/>
               <path class="root" style="animation-delay:0ms" d="M150,258 C150,296 118,300 96,338"/>
@@ -759,14 +770,15 @@ try{
               <line class="trunk" style="animation-delay:120ms" x1="150" y1="258" x2="150" y2="52"/>
               <path class="branch" style="animation-delay:180ms" d="M150,200 C128,190 108,166 96,142"/>
               <path class="branch" style="animation-delay:220ms" d="M150,182 C174,170 194,160 205,150"/>
-              <ellipse class="leaf" style="animation-delay:260ms" cx="0" cy="0" rx="17" ry="9" transform="translate(90,134) rotate(-38)"/>
-              <ellipse class="leaf" style="animation-delay:300ms" cx="0" cy="0" rx="17" ry="9" transform="translate(210,144) rotate(35)"/>
-              <ellipse class="leaf" style="animation-delay:340ms" cx="0" cy="0" rx="15" ry="8" transform="translate(138,58) rotate(-18)"/>
-              <ellipse class="leaf" style="animation-delay:360ms" cx="0" cy="0" rx="15" ry="8" transform="translate(163,58) rotate(18)"/>
-              <ellipse class="leaf" style="animation-delay:380ms" cx="0" cy="0" rx="13" ry="7" transform="translate(150,42) rotate(0)"/>
-              <path class="fruit-stem" style="animation-delay:200ms" d="M220,138 Q236,140 244,147"/>
-              <circle class="fruit" style="animation-delay:300ms" cx="247" cy="151" r="8"/>
-              <circle class="fruit-shine" style="animation-delay:300ms" cx="244" cy="147" r="2.2"/>
+              <g transform="translate(90,134) rotate(-38)"><ellipse class="leaf" style="animation-delay:280ms" cx="17" cy="0" rx="17" ry="9"/></g>
+              <g transform="translate(210,144) rotate(35)"><ellipse class="leaf" style="animation-delay:320ms" cx="17" cy="0" rx="17" ry="9"/></g>
+              <g transform="translate(138,58) rotate(-18)"><ellipse class="leaf" style="animation-delay:400ms" cx="15" cy="0" rx="15" ry="8"/></g>
+              <g transform="translate(163,58) rotate(18)"><ellipse class="leaf" style="animation-delay:430ms" cx="15" cy="0" rx="15" ry="8"/></g>
+              <g transform="translate(150,42) rotate(0)"><ellipse class="leaf" style="animation-delay:460ms" cx="13" cy="0" rx="13" ry="7"/></g>
+              <path class="fruit-stem" style="animation-delay:260ms" d="M220,138 Q236,140 244,147"/>
+              <path class="fruit-calyx" style="animation-delay:520ms" d="M247,143v-4"/>
+              <circle class="fruit" style="animation-delay:400ms" cx="247" cy="152" r="9"/>
+              <circle class="fruit-shade" style="animation-delay:400ms" cx="247" cy="152" r="9" fill="url(#fruitShade)"/>
             </svg>
             <div class="p-markers" id="plantMarkers"></div>
         </div>
