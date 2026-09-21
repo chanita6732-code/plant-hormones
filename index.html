@@ -276,8 +276,30 @@ h1{
 .path-step strong{display:block;font-size:1rem;font-weight:600;margin-bottom:6px}
 .path-step p{margin:0;color:var(--muted);font-size:.86rem;font-weight:300;line-height:1.55}
 
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding-bottom:24px}
+.team-card{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:22px 20px;
+  display:flex;flex-direction:column;gap:4px;
+  box-shadow:var(--shadow);
+}
+.team-num{
+  position:absolute;top:18px;right:20px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--accent-soft);color:var(--accent);
+  font-size:.82rem;font-weight:600;
+  display:grid;place-items:center;
+}
+.team-card strong{font-size:1rem;font-weight:600;padding-right:34px}
+.team-card p{margin:0;color:var(--muted);font-size:.86rem;font-weight:300}
+.team-class{color:var(--muted);font-size:.9rem;text-align:center;padding-bottom:clamp(48px,10vh,88px)}
+
 @media (max-width:1023px){
   .glance-grid{grid-template-columns:repeat(3,1fr)}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:767px){
   .hero-grid{grid-template-columns:1fr}
@@ -287,6 +309,7 @@ h1{
   .home-section{margin-top:48px}
   .glance-grid{grid-template-columns:repeat(2,1fr)}
   .path-grid{grid-template-columns:1fr;gap:12px}
+  .team-grid{grid-template-columns:1fr}
 }
 @media (max-width:480px){
   .hero-actions{flex-direction:column;align-items:stretch}
@@ -807,6 +830,7 @@ try{
       <a class="nav-btn" href="#/compare" data-nav="compare"><svg viewBox="0 0 24 24"><path d="M4 21V10"/><path d="M12 21V4"/><path d="M20 21v-7"/></svg><span>เปรียบเทียบ</span></a>
       <a class="nav-btn" href="#/lab" data-nav="lab"><svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6.7L4.6 18.4A2 2 0 0 0 6.3 21.5h11.4a2 2 0 0 0 1.7-3.1L14 9.7V3"/><path d="M7.3 15h9.4"/></svg><span>ห้องทดลอง</span></a>
       <a class="nav-btn" href="#/quiz" data-nav="quiz"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.3 9.3a2.7 2.7 0 1 1 3.9 2.4c-.9.5-1.2 1-1.2 2"/><path d="M12 17h.01"/></svg><span>แบบทดสอบ</span></a>
+      <a class="nav-btn" href="#/about" data-nav="about"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.6 2.5-6 5.5-6s5.5 2.4 5.5 6"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.3 14.3c2.6.3 4.7 2.5 4.7 5.7"/></svg><span>ผู้จัดทำ</span></a>
     </nav>
     <button class="theme-btn" id="themeBtn" type="button" aria-label="สลับโหมดมืด/สว่าง">
       <svg id="themeIcon" viewBox="0 0 24 24"></svg>
@@ -1015,6 +1039,26 @@ try{
       <div class="quiz-wrap">
         <div class="quiz-card" id="quizCard"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- ABOUT: credits -->
+  <div class="view" id="view-about">
+    <div class="wrap">
+      <header class="view-head">
+        <p class="eyebrow">Credits</p>
+        <h2>ผู้จัดทำ</h2>
+        <p class="view-sub">นักเรียนชั้นมัธยมศึกษาปีที่ 5/2 ผู้จัดทำเว็บไซต์เรียนรู้ฮอร์โมนพืชนี้</p>
+      </header>
+      <div class="team-grid">
+        <div class="team-card"><span class="team-num">1</span><strong>นายเปรมศักดิ์ ขาวทอง</strong><p>เลขที่ 1</p></div>
+        <div class="team-card"><span class="team-num">2</span><strong>นายณกรณ์ ว่องวงศกร</strong><p>เลขที่ 4</p></div>
+        <div class="team-card"><span class="team-num">3</span><strong>นายดุลยวัต จันทร์แจ้ง</strong><p>เลขที่ 5</p></div>
+        <div class="team-card"><span class="team-num">4</span><strong>นายธนภัทร ชุมแก้ว</strong><p>เลขที่ 6</p></div>
+        <div class="team-card"><span class="team-num">5</span><strong>นายธนภูมิ แก้ววิลาศ</strong><p>เลขที่ 7</p></div>
+        <div class="team-card"><span class="team-num">6</span><strong>นายรณกร เกื้อเสนาะ</strong><p>เลขที่ 18</p></div>
+      </div>
+      <p class="team-class">ชั้นมัธยมศึกษาปีที่ 5/2</p>
     </div>
   </div>
 
@@ -1668,6 +1712,7 @@ const VIEWS = {
   compare: document.getElementById('view-compare'),
   lab: document.getElementById('view-lab'),
   quiz: document.getElementById('view-quiz'),
+  about: document.getElementById('view-about'),
   detail: viewDetail
 };
 const TITLES = {
@@ -1676,7 +1721,8 @@ const TITLES = {
   grid:'ฮอร์โมนทั้งหมด · ฮอร์โมนพืช',
   compare:'ตารางเปรียบเทียบ · ฮอร์โมนพืช',
   lab:'ห้องทดลอง · ฮอร์โมนพืช',
-  quiz:'แบบทดสอบ · ฮอร์โมนพืช'
+  quiz:'แบบทดสอบ · ฮอร์โมนพืช',
+  about:'ผู้จัดทำ · ฮอร์โมนพืช'
 };
 let activeViewKey = 'home';
 
@@ -1719,6 +1765,7 @@ function route(){
   else if(seg === 'compare') key = 'compare';
   else if(seg === 'lab') key = 'lab';
   else if(seg === 'quiz') key = 'quiz';
+  else if(seg === 'about') key = 'about';
   else {
     const h = HORMONES.find(x=>x.id===seg);
     if(h){ key='detail'; renderDetail(h); }
