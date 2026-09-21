@@ -102,11 +102,11 @@ a{color:inherit}
 }
 .brand:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .brand-icon{
-  width:22px;height:22px;flex:none;color:var(--accent);
+  width:20px;height:20px;flex:none;color:var(--accent);
   display:grid;place-items:center;
   transition:color .3s var(--ease);
 }
-.brand-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.brand-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .brand-text{display:flex;flex-direction:column;line-height:1.3}
 .brand-text strong{font-size:.98rem;font-weight:600}
 .brand-text span{font-family:"Inter",sans-serif;font-size:.68rem;color:var(--muted);letter-spacing:.04em}
@@ -196,9 +196,21 @@ h1{
 }
 .view-sub{font-size:.98rem}
 
-/* ── interactive plant diagram (home) ─────────────────── */
+.hero-actions{margin-top:32px}
+.hero-cta{
+  appearance:none;border:0;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--accent);color:#fff;
+  padding:13px 24px;border-radius:999px;
+  font:inherit;font-size:.94rem;font-weight:500;
+  transition:transform .25s var(--ease), background-color .3s var(--ease);
+}
+.hero-cta:hover{transform:translateX(2px)}
+.hero-cta:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.hero-cta svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── interactive plant diagram ─────────────────────────── */
 .diagram-section{padding-bottom:clamp(64px,12vh,120px)}
-.diagram-hint{color:var(--muted);font-weight:300;font-size:.92rem;margin:0 0 32px;max-width:52ch}
 
 .plant-figure{position:relative;width:100%;max-width:380px;aspect-ratio:300/420;margin:0 auto;user-select:none}
 .plant-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
@@ -664,12 +676,12 @@ try{
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="#/" aria-label="กลับหน้าแรก">
-      <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20c8 0 14-5 16-16C11 4 5 9 4 20Z"/><path d="M4 20c2-6 6-10 12-13"/></svg></span>
+      <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20c8 0 14-5 16-16C11 4 5 9 4 20Z"/></svg></span>
       <span class="brand-text"><strong>ฮอร์โมนพืช</strong><span>PLANT PHYSIOLOGY</span></span>
     </a>
     <span class="nav-divider" aria-hidden="true"></span>
     <nav class="site-nav" id="siteNav" aria-label="เมนูหลัก">
-      <a class="nav-btn" href="#/" data-nav="home"><svg viewBox="0 0 24 24"><path d="M12 22V12"/><path d="M12 12C12 7 8 5 4 5c0 5 3 8 8 7Z"/><path d="M12 12c0-4 3-6 7-6 0 4-2 7-7 6Z"/></svg><span>ผังต้นพืช</span></a>
+      <a class="nav-btn" href="#/diagram" data-nav="diagram"><svg viewBox="0 0 24 24"><path d="M12 22V12"/><path d="M12 12C12 7 8 5 4 5c0 5 3 8 8 7Z"/><path d="M12 12c0-4 3-6 7-6 0 4-2 7-7 6Z"/></svg><span>ผังต้นพืช</span></a>
       <a class="nav-btn" href="#/hormones" data-nav="grid"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.6"/><rect x="13" y="3" width="8" height="8" rx="1.6"/><rect x="3" y="13" width="8" height="8" rx="1.6"/><rect x="13" y="13" width="8" height="8" rx="1.6"/></svg><span>ฮอร์โมนทั้งหมด</span></a>
       <a class="nav-btn" href="#/compare" data-nav="compare"><svg viewBox="0 0 24 24"><path d="M4 21V10"/><path d="M12 21V4"/><path d="M20 21v-7"/></svg><span>เปรียบเทียบ</span></a>
       <a class="nav-btn" href="#/lab" data-nav="lab"><svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6.7L4.6 18.4A2 2 0 0 0 6.3 21.5h11.4a2 2 0 0 0 1.7-3.1L14 9.7V3"/><path d="M7.3 15h9.4"/></svg><span>ห้องทดลอง</span></a>
@@ -682,18 +694,29 @@ try{
 </header>
 
 <main class="stage">
-  <!-- HOME: interactive diagram -->
+  <!-- HOME: landing -->
   <div class="view is-active" id="view-home">
     <div class="wrap">
       <header class="view-head is-hero">
         <p class="eyebrow">Plant Physiology</p>
         <h1>ฮอร์โมนพืช</h1>
-        <p class="lede">สารเคมีปริมาณเล็กน้อยที่พืชสร้างขึ้นเอง แล้วลำเลียงไปควบคุมการเจริญเติบโตและการตอบสนองต่อสิ่งแวดล้อม แตะตำแหน่งบนต้นพืชด้านล่างเพื่อดูว่าฮอร์โมนชนิดใดทำงานอยู่ หรือเลือกดูฮอร์โมนทั้งหมด ตารางเปรียบเทียบ และแบบทดสอบได้จากเมนูด้านบน</p>
+        <p class="lede">สารเคมีปริมาณเล็กน้อยที่พืชสร้างขึ้นเอง แล้วลำเลียงไปควบคุมการเจริญเติบโตและการตอบสนองต่อสิ่งแวดล้อม ตั้งแต่การยืดตัวของเซลล์ การออกดอกออกผล ไปจนถึงการรับมือกับความเครียด สำรวจฮอร์โมนทั้ง 5 ชนิดได้จากเมนูด้านบน หรือเริ่มจากผังตำแหน่งบนต้นพืชแบบอินเทอร์แอกทีฟ</p>
+        <div class="hero-actions">
+          <a class="hero-cta" href="#/diagram">ดูผังต้นพืช <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></a>
+        </div>
       </header>
+    </div>
+  </div>
 
-      <section class="diagram-section" aria-labelledby="diagramHeading">
-        <h2 id="diagramHeading" style="font-size:1.1rem;font-weight:600;margin:0 0 8px">ผังตำแหน่งฮอร์โมนบนต้นพืช</h2>
-        <p class="diagram-hint">แตะตำแหน่งบนต้นพืชด้านล่างเพื่อดูว่าฮอร์โมนชนิดใดทำงานอยู่บริเวณนั้น</p>
+  <!-- DIAGRAM: interactive plant diagram -->
+  <div class="view" id="view-diagram">
+    <div class="wrap">
+      <header class="view-head">
+        <p class="eyebrow">Interactive</p>
+        <h2>ผังตำแหน่งฮอร์โมนบนต้นพืช</h2>
+        <p class="view-sub">แตะตำแหน่งบนต้นพืชด้านล่างเพื่อดูว่าฮอร์โมนชนิดใดทำงานอยู่บริเวณนั้น</p>
+      </header>
+      <section class="diagram-section">
         <div class="plant-figure" id="plantFigure">
             <svg class="plant-svg" viewBox="0 0 300 420" aria-hidden="true" focusable="false">
               <rect class="soil" x="14" y="260" width="272" height="148" rx="16"/>
@@ -1436,6 +1459,7 @@ function renderDetail(h){
 /* ── router ────────────────────────────────────────────── */
 const VIEWS = {
   home: document.getElementById('view-home'),
+  diagram: document.getElementById('view-diagram'),
   grid: document.getElementById('view-grid'),
   compare: document.getElementById('view-compare'),
   lab: document.getElementById('view-lab'),
@@ -1444,6 +1468,7 @@ const VIEWS = {
 };
 const TITLES = {
   home:'ฮอร์โมนพืช · Plant Hormones',
+  diagram:'ผังต้นพืช · ฮอร์โมนพืช',
   grid:'ฮอร์โมนทั้งหมด · ฮอร์โมนพืช',
   compare:'ตารางเปรียบเทียบ · ฮอร์โมนพืช',
   lab:'ห้องทดลอง · ฮอร์โมนพืช',
@@ -1476,6 +1501,7 @@ function route(){
   const seg = (location.hash.match(/^#\/?(.*)$/)||[])[1] || '';
   let key;
   if(seg === '' || seg === 'home') key = 'home';
+  else if(seg === 'diagram') key = 'diagram';
   else if(seg === 'hormones') key = 'grid';
   else if(seg === 'compare') key = 'compare';
   else if(seg === 'lab') key = 'lab';
@@ -1486,7 +1512,7 @@ function route(){
     else key='home';
   }
   document.title = TITLES[key] || TITLES.home;
-  setActiveNav(key === 'detail' ? null : key);
+  setActiveNav((key === 'detail' || key === 'home') ? null : key);
   swapTo(key);
   window.scrollTo({top:0, behavior: reduce ? 'auto' : 'smooth'});
 }
